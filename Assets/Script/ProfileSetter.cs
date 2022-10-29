@@ -27,14 +27,24 @@ public class ProfileSetter : MonoBehaviour
     void setProfileNumberOf(int n){
         if(profileData.name[n] != "-")
         {
-            profileInstances[n] = Instantiate(profileTemplate, transform);
-            profileInstances[n].transform.Find("Name").GetComponent<TextMeshProUGUI>().text = profileData.name[i];
-            profileInstances[n].transform.Find("Introduce").GetComponent<TextMeshProUGUI>().text = profileData.introduce[i];
-            Material material = Instantiate(transform.Find("Profile").GetComponent<Image>().material);
-            mat.SetFloat//머티리얼에서 hsv 쉐이더 접근해서 바꾸는거 시도중. 쉐이더 다 변하지 않아야 함.
-            //https://answers.unity.com/questions/920091/how-can-i-change-the-shader-parameters-for-an-ui-i.html
-            profileInstances[n].transform.Find("Profile").GetComponent<Image>().material = ;
+            setProfileTextsOf(n);
+            setProfileColorOf(n);
         }
+    }
+
+    void setProfileTextsOf(int n)
+    {
+        profileInstances[n] = Instantiate(profileTemplate, transform);
+        profileInstances[n].transform.Find("Name").GetComponent<TextMeshProUGUI>().text = profileData.name[n];
+        profileInstances[n].transform.Find("Introduce").GetComponent<TextMeshProUGUI>().text = profileData.introduce[n];
+    }
+
+    void setProfileColorOf(int n)
+    {
+        Image profileImg = profileInstances[n].transform.Find("Profile").GetComponent<Image>();
+        Material mat = Instantiate(profileImg.material);
+        mat.SetVector("_HSVAAdjust", new Vector4(float.Parse(profileData.color[n]), 0f, 0f, 0f));
+        profileInstances[n].transform.Find("Profile").GetComponent<Image>().material = mat;
     }
 
     void setSectionLineNumberOf(int n){
