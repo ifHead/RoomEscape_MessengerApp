@@ -9,5 +9,5 @@ public class Profile : ScriptableObject
     public string[] name;
     public string[] color;
     public string[] introduce;
-    public GameObject[] chatRoom;
+    public string[] chatRoom;
 }
