@@ -255,8 +255,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uB300\uD45C\uC774\uC0AC(\uBD80\uC11C)"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6949fa304c77f1042acdb6b58350b359, type: 2}
-  m_sharedMaterial: {fileID: -7738465084679143349, guid: 6949fa304c77f1042acdb6b58350b359, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 25bf177511ba63649b6c7c28af013e6b, type: 2}
+  m_sharedMaterial: {fileID: -2193735521602806059, guid: 25bf177511ba63649b6c7c28af013e6b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

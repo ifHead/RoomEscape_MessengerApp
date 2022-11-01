@@ -4,35 +4,51 @@ using UnityEngine;
 
 public class Navigator : MonoBehaviour
 {
+    public static PageType pageType;
+    public GameObject chatRoom;
+    public GameObject mainScreen;
+
     public enum PageType
     {
         Home,
         ChatRoom
     }
 
-    PageType pageType = PageType.Home;
-
-    public void setPage(GameObject pageLayout, PageType pt)
+    void Start()
     {
-        SetActive(pageLayout, true);
-        this.pageType = pt;
+        pageType = PageType.Home;
     }
+
 
     private void Update()
     {
+        checkBackSoftKey();
+    }
+
+    private void checkBackSoftKey(){
         //안드로이드 뒤로가기 상시 체크
-        if( Input.GetKeyDown( KeyCode.Escape ) )
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            switch(pageType){
-                case PageType.Home :
-                    //앱 종료할지 체크
+            switch (pageType)
+            {
+                case PageType.Home:
+                    //앱 종료할지 팝업
+                    Application.Quit();
                     break;
-                case PageType.ChatRoom :
-                    SetActive(채팅방 요소들, false);
-                    SetActive(홈페이지 요소들, true);
-                    this.pageType = PageType.Home;
+                    
+                case PageType.ChatRoom:
+                    Navigator.pageType = PageType.Home;
+                    chatRoom.SetActive(false);
+                    mainScreen.SetActive(true);
                     break;
             }
         }
+    }
+
+    public void goToChatRoom(string chatRoomName)
+    {
+        chatRoom.SetActive(true);
+        mainScreen.SetActive(false);
+        Navigator.pageType = Navigator.PageType.ChatRoom;
     }
 }
