@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1049241ea57bab142929133196ea3490, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chatRoomName: {fileID: 1332589086982534546}
 --- !u!1 &678610964645323633
 GameObject:
   m_ObjectHideFlags: 0

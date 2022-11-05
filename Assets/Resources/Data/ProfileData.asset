@@ -16,14 +16,15 @@ MonoBehaviour:
     \uD569\uB2C8\uB2E4.\n2.Department \uBD80\uC11C\uBA85\uC740 \uAD6C\uBD84\uC120\uC73C\uB85C
     \uC4F0\uC785\uB2C8\uB2E4. \n3.\uAD6C\uBD84\uC120\uC774 \uB098\uC640\uC57C \uD558\uB294
     \uACF3\uC740 name\uC744 \uACF5\uB780\uC73C\uB85C \uB461\uB2C8\uB2E4."
-  department:
+  departments:
   - "\uB300\uD45C\uC774\uC0AC"
   - "\uAE30\uD68D1\uD300"
   - "\uAE30\uD68D2\uD300"
   - "\uC2E4\uC2DC\uC124\uACC4\uD300"
   - "\uAC1C\uBC1C\uD300"
   - "\uC2DC\uACF5\uD300"
-  name:
+  names:
+  - "\uB0A8\uBBFC\uC11C"
   - '-'
   - "\uAD6C\uC2AC\uBE44"
   - '-'
@@ -36,45 +37,47 @@ MonoBehaviour:
   - '-'
   - "\uC804\uC740\uACBD \uD300\uC7A5"
   - "\uC190\uC601\uC815 \uC8FC\uC784"
-  - "\uC18C\uD604 \uC0AC\uC6D0"
+  - "\uC774\uB3D9\uD5CC \uC0AC\uC6D0"
   - '-'
   - "\uC815\uC9C0\uC724 \uD300\uC7A5"
   - "\uC815\uC0B0 \uB300\uB9AC"
   - "\uC815\uBC31\uBBFC \uC0AC\uC6D0"
   - '-'
-  - "\uC774\uC8FC\uC740 \uD300\uC7A5"
+  - "\uC18C\uC740\uC8FC \uD300\uC7A5"
   - "\uC720\uC18C\uBBFC \uB300\uB9AC"
-  color:
-  - '-'
-  - 0.3
-  - '-'
+  colors:
   - 0.1
-  - 0.2
   - '-'
   - 0.4
-  - 0.8
-  - 0.7
-  - '-'
-  - 0.3
-  - 0.5
-  - 0.6
   - '-'
   - 0.8
-  - 0.1
   - 0.9
   - '-'
-  - 0.4
-  - 0.8
-  introduce:
+  - 0.1
+  - 0.6
+  - 0.7
+  - '-'
+  - 0.45
+  - 0.67
+  - 0.49
+  - '-'
+  - 0.79
+  - 0.19
+  - 0.72
+  - '-'
+  - 0.52
+  - 0.87
+  introduces:
+  - 
   - '-'
   - 
   - '-'
   - 
   - 
   - '-'
-  - "\uCD9C\uC7A5\uC911. \uAE09\uD55C \uC77C\uC740 \uC804\uD654\uC8FC\uC138\uC694."
+  - "\uCD9C\uC7A5 \uC911, \uAE09\uD55C \uC77C\uC740 \uC804\uD654 \uC8FC\uC138\uC694."
   - 
-  - "\uD558"
+  - 
   - '-'
   - 
   - "\uB2E4\uC74C \uC8FC \uC6D4\uC694\uC77C\uAE4C\uC9C0 \uD734\uAC00\uC785\uB2C8\uB2E4."
@@ -86,7 +89,8 @@ MonoBehaviour:
   - '-'
   - 
   - 
-  chatRoom:
+  chatRooms:
+  - "\uB0A8\uBBFC\uC11C"
   - '-'
   - "\uAD6C\uC2AC\uBE44"
   - '-'
@@ -99,11 +103,11 @@ MonoBehaviour:
   - '-'
   - "\uC804\uC740\uACBD \uD300\uC7A5"
   - "\uC190\uC601\uC815 \uC8FC\uC784"
-  - "\uC18C\uD604 \uC0AC\uC6D0"
+  - "\uC774\uB3D9\uD5CC \uC0AC\uC6D0"
   - '-'
   - "\uC815\uC9C0\uC724 \uD300\uC7A5"
   - "\uC815\uC0B0 \uB300\uB9AC"
   - "\uC815\uBC31\uBBFC \uC0AC\uC6D0"
   - '-'
-  - "\uC774\uC8FC\uC740 \uD300\uC7A5"
+  - "\uC18C\uC740\uC8FC \uD300\uC7A5"
   - "\uC720\uC18C\uBBFC \uB300\uB9AC"

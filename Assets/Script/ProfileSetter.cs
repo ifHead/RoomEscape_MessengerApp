@@ -15,9 +15,9 @@ public class ProfileSetter : MonoBehaviour
     void Start()
     {
         profileData = Resources.Load<Profile>("Data/ProfileData");
-        profileInstances = new GameObject[profileData.name.Length];
+        profileInstances = new GameObject[profileData.names.Length];
 
-        for(int i = 0; i < profileData.name.Length; i++)
+        for(int i = 0; i < profileData.names.Length; i++)
         {
             setProfileNumberOf(i);
             setSectionLineNumberOf(i);
@@ -25,7 +25,7 @@ public class ProfileSetter : MonoBehaviour
     }
 
     void setProfileNumberOf(int n){
-        if(profileData.name[n] != "-")
+        if(profileData.names[n] != "-")
         {
             setProfileTextsOf(n);
             setProfileColorOf(n);
@@ -35,23 +35,23 @@ public class ProfileSetter : MonoBehaviour
     void setProfileTextsOf(int n)
     {
         profileInstances[n] = Instantiate(profileTemplate, transform);
-        profileInstances[n].transform.Find("Name").GetComponent<TextMeshProUGUI>().text = profileData.name[n];
-        profileInstances[n].transform.Find("Introduce").GetComponent<TextMeshProUGUI>().text = profileData.introduce[n];
+        profileInstances[n].transform.Find("Name").GetComponent<TextMeshProUGUI>().text = profileData.names[n];
+        profileInstances[n].transform.Find("Introduce").GetComponent<TextMeshProUGUI>().text = profileData.introduces[n];
     }
 
     void setProfileColorOf(int n)
     {
         Image profileImg = profileInstances[n].transform.Find("Profile").GetComponent<Image>();
         Material mat = Instantiate(profileImg.material);
-        mat.SetVector("_HSVAAdjust", new Vector4(float.Parse(profileData.color[n]), 0f, 0f, 0f));
+        mat.SetVector("_HSVAAdjust", new Vector4(float.Parse(profileData.colors[n]), 0f, 0f, 0f));
         profileInstances[n].transform.Find("Profile").GetComponent<Image>().material = mat;
     }
 
     void setSectionLineNumberOf(int n){
-        if(profileData.name[n] == "-")
+        if(profileData.names[n] == "-")
         {
             profileInstances[n] = Instantiate(sectionTemplate, transform);
-            profileInstances[n].transform.Find("DepartmentName").GetComponent<TextMeshProUGUI>().text = profileData.department[departmentLineCnt];
+            profileInstances[n].transform.Find("DepartmentName").GetComponent<TextMeshProUGUI>().text = profileData.departments[departmentLineCnt];
             departmentLineCnt++;
         }
     }
