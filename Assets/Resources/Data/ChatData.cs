@@ -15,7 +15,6 @@ using Newtonsoft.Json;
 
 public class ChatData
 {
-
     public struct ChatRoom {
         public string? chatRoomName {get; set;}
         public List<List<string>?>? chat {get; set;}

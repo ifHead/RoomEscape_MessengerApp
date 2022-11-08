@@ -10,6 +10,7 @@ using System.Reflection;
 
 public class ChatDataController : MonoBehaviour
 {
+    ChatData chatDataObj;
 
     void Start()
     {
@@ -17,11 +18,9 @@ public class ChatDataController : MonoBehaviour
         string chatJsonString = ObjectToJson(chatData);
         CreateJsonFile("ChatData.json", chatJsonString);
 
-        ChatData chatDataObj = JsonToObject<ChatData>(
+        chatDataObj = JsonToObject<ChatData>(
             Resources.Load<TextAsset>("Data/OriginalChatData").ToString()
         );
-
-        Debug.Log(chatData.chatRooms[0].chatRoomName);
     }
 
     //Newtonsoft : 객체를 받아와서 Json 문자열을 반환

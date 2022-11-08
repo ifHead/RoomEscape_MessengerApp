@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 
 public class ChatManager : MonoBehaviour
 {
@@ -12,15 +12,12 @@ public class ChatManager : MonoBehaviour
     public Scrollbar scrollbar;
     public InputField inputField;
     public GameObject myMessageBox;
-    public GameObject chatRoomContent;
+    public RectTransform chatRoomContent;
+    public TextMeshProUGUI curChatRoomName;
     public string lastMessageTime = "";
     TouchScreenKeyboard softKeyboard;
-    float time;
-    
-    void Start()
-    {
-
-    }
+    public ChatDataController chatControl;
+    float time; 
 
     void Update()
     {
@@ -81,51 +78,56 @@ public class ChatManager : MonoBehaviour
         }
     }
 
-    public void setupChatRoom()
+    public void setupChatRoom(string _reqChatRoomName)
     {
         int chatRoomContentNum = chatRoomContent.transform.childCount;
+        // 차일드카운트가 널 레퍼런스 에러가 뜸
+        
+        //Debug.Log(chatRoomContent.RectTransform.);
+        
+        // for (int i = 0; i < chatRoomContentNum; i++)
+        // {
+        //     Destroy(chatRoomContent.transform.GetChild(i).transform);
+        // }
 
-        for (int i = 0; i < chatRoomContentNum; i++)
-        {
-            Destroy(chatRoomContent.transform.GetChild(i));
-        }
+        // curChatRoomName.text = _reqChatRoomName;
 
-        if (inputField.text.Trim() != "")
-        {
-            chat("me", inputField.text);
+        // if (inputField.text.Trim() != "")
+        // {
+        //     chat("me", inputField.text);
 
-            //말풍선 생성 후 메시지 내용 설정
-            GameObject messageBox = Instantiate(myMessageBox);
-            messageBox.GetComponent<AreaScript>().userText.text = inputField.text;
+        //     //말풍선 생성 후 메시지 내용 설정
+        //     GameObject messageBox = Instantiate(myMessageBox);
+        //     messageBox.GetComponent<AreaScript>().userText.text = inputField.text;
 
-            //시간 텍스트 설정
-            AreaScript areaScript = messageBox.GetComponent<AreaScript>();
-            areaScript.timeText.text = DateTime.Now.ToString("tt") == "AM" ? "오전 " : "오후 ";
-            areaScript.timeText.text = areaScript.timeText.text + DateTime.Now.ToString("hh:mm");
+        //     //시간 텍스트 설정
+        //     AreaScript areaScript = messageBox.GetComponent<AreaScript>();
+        //     areaScript.timeText.text = DateTime.Now.ToString("tt") == "AM" ? "오전 " : "오후 ";
+        //     areaScript.timeText.text = areaScript.timeText.text + DateTime.Now.ToString("hh:mm");
 
-            if (lastMessageTime != "" && areaScript.timeText.text == lastMessageTime)
-            {
-                areaScript.timeText.gameObject.SetActive(false);
-            }
+        //     if (lastMessageTime != "" && areaScript.timeText.text == lastMessageTime)
+        //     {
+        //         areaScript.timeText.gameObject.SetActive(false);
+        //     }
 
-            lastMessageTime = areaScript.timeText.text;
+        //     lastMessageTime = areaScript.timeText.text;
 
-            //말풍선을 채팅창 vertical layout에 추가
-            messageBox.transform.SetParent(chatRoomContent.transform);
-            inputField.text = "";
+        //     //말풍선을 채팅창 vertical layout에 추가
+        //     messageBox.transform.SetParent(chatRoomContent.transform);
+        //     inputField.text = "";
 
-            Canvas.ForceUpdateCanvases();
-            if (areaScript.textRect.sizeDelta.x > 536)
-            {
-                Canvas.ForceUpdateCanvases();
-                areaScript.balloonRect.transform.GetComponent<VerticalLayoutGroup>().childControlWidth = false;
-                Canvas.ForceUpdateCanvases();
-                areaScript.textRect.sizeDelta = new Vector2(510, areaScript.textRect.sizeDelta.y);
-                Canvas.ForceUpdateCanvases();
-                messageBox.SetActive(false);
-                messageBox.SetActive(true);
-            }
-        }
+        //     Canvas.ForceUpdateCanvases();
+        //     if (areaScript.textRect.sizeDelta.x > 536)
+        //     {
+        //         Canvas.ForceUpdateCanvases();
+        //         areaScript.balloonRect.transform.GetComponent<VerticalLayoutGroup>().childControlWidth = false;
+        //         Canvas.ForceUpdateCanvases();
+        //         areaScript.textRect.sizeDelta = new Vector2(510, areaScript.textRect.sizeDelta.y);
+        //         Canvas.ForceUpdateCanvases();
+        //         messageBox.SetActive(false);
+        //         messageBox.SetActive(true);
+        //     }
+        // }
     }
 }
 
