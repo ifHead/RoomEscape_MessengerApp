@@ -10,16 +10,14 @@ using System.Reflection;
 
 public class ChatDataController : MonoBehaviour
 {
-    ChatData chatDataObj;
+    public ChatData chatDataObj;
 
     void Start()
     {
-        ChatData chatData = new ChatData();
-        string chatJsonString = ObjectToJson(chatData);
-        CreateJsonFile("ChatData.json", chatJsonString);
-
+        // string chatJsonString = ObjectToJson(chatData);
+        // CreateJsonFile("ChatData.json", chatJsonString);
         chatDataObj = JsonToObject<ChatData>(
-            Resources.Load<TextAsset>("Data/OriginalChatData").ToString()
+            Resources.Load<TextAsset>("Data/ChatDataJSON").ToString()
         );
     }
 

@@ -8,7 +8,7 @@ public class ProfileSetter : MonoBehaviour
 {
     public GameObject profileTemplate;
     public GameObject sectionTemplate;
-    private Profile profileData;
+    public Profile profileData;
     public GameObject[] profileInstances;
     int departmentLineCnt = 0;
 
@@ -43,7 +43,9 @@ public class ProfileSetter : MonoBehaviour
     {
         Image profileImg = profileInstances[n].transform.Find("Profile").GetComponent<Image>();
         Material mat = Instantiate(profileImg.material);
-        mat.SetVector("_HSVAAdjust", new Vector4(float.Parse(profileData.colors[n]), 0f, 0f, 0f));
+        mat.SetVector("_HSVAAdjust", new Vector4(
+            float.Parse(profileData.colors[n]), 0f, 0f, 0f)
+        );
         profileInstances[n].transform.Find("Profile").GetComponent<Image>().material = mat;
     }
 

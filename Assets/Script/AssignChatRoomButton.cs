@@ -9,7 +9,12 @@ public class AssignChatRoomButton : MonoBehaviour
     Navigator navigator;
     string employeeName;
     public TextMeshProUGUI chatRoomName;
-    ChatManager chatManager = new ChatManager();
+    public ChatManager chatManager;
+    
+    private void Start()
+    {
+        chatManager = GameObject.Find("ChatManager").GetComponent<ChatManager>();
+    }
 
     public void goToChatRoom(){
         navigator = GameObject.Find("Navigator").GetComponent<Navigator>();

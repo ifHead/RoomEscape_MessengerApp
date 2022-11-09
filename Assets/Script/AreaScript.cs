@@ -8,6 +8,6 @@ public class AreaScript : MonoBehaviour
 {
     public RectTransform fullAreaRect, balloonRect, textRect;
     public GameObject tail;
-    public TextMeshProUGUI timeText, userText;
+    public TextMeshProUGUI timeText, userText, friendName;
     public string time, user;
 }
