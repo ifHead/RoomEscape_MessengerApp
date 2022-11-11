@@ -17,6 +17,7 @@ public class Navigator : MonoBehaviour
     void Start()
     {
         pageType = PageType.Home;
+        chatRoom.SetActive(false);
     }
 
 

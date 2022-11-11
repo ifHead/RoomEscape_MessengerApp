@@ -15,6 +15,9 @@ using Newtonsoft.Json;
 
 public class ChatData
 {
+    public List<ChatRoom> chatRooms;
+    private Profile profileData;
+
     public ChatData()
     {
         profileData = Resources.Load<Profile>("Data/ProfileData");
@@ -22,15 +25,12 @@ public class ChatData
 
         initChatRooms(profileNum);
     }
-    
+
     public struct ChatRoom 
     {
         public string? chatRoomName {get; set;}
         public List<List<string>?>? chat {get; set;}
     }
-
-    public List<ChatRoom> chatRooms;
-    private Profile profileData;
     
 
     public void initChatRooms(int n)

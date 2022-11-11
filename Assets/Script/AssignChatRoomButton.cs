@@ -20,5 +20,14 @@ public class AssignChatRoomButton : MonoBehaviour
         navigator = GameObject.Find("Navigator").GetComponent<Navigator>();
         navigator.goToChatRoom(employeeName);        
         chatManager.setupChatRoom(chatRoomName.text);
+        Invoke("bringScrollToBottom", 0.05f);
+    }
+
+    void bringScrollToBottom()
+    {
+        chatManager = GameObject.Find("ChatManager").GetComponent<ChatManager>();
+        Canvas.ForceUpdateCanvases();
+        chatManager.scrollbar.value = 0.0001f;
+        Canvas.ForceUpdateCanvases();
     }
 }
