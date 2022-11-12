@@ -48,7 +48,7 @@ public class ChatManager : MonoBehaviour
         {
             time += Time.deltaTime;
         }
-        else if (time > Time.deltaTime * 100)
+        else if (time > Time.deltaTime * 50)
         {
             sendButton();
         }
@@ -57,8 +57,9 @@ public class ChatManager : MonoBehaviour
     public void saveChat(string sender, string text)
     {
         // 스페이스나 개행만 입력했을 때는 메시지가 전송되지 않음
-        if (text.Trim() == "") return; 
+        if (text.Trim() == "") return;
 
+        Invoke("bringScrollToBottom", 0.05f);
         List<ChatData.ChatRoom> allChatRooms = chatDataController.chatDataObj.chatRooms;
 
         for(int i = 0; i < allChatRooms.Count; i++)
@@ -89,8 +90,9 @@ public class ChatManager : MonoBehaviour
 
     void bringScrollToBottom()
     {
+        scrollbar.value = 0.0000001f;
         Canvas.ForceUpdateCanvases();
-        scrollbar.value = 0.0001f;
+        scrollbar.value = - 0.01f;
         Canvas.ForceUpdateCanvases();
     }
 
@@ -113,28 +115,30 @@ public class ChatManager : MonoBehaviour
                     if(s.Contains("오류") || s.Contains("에러") && !isQuizSolutionRevealed)
                     {
                         isQuizSolutionRevealed = true;
-                        sendFriendMessage("아 제가 지금 외부출장중이라...ㅠ", 3);
-                        sendFriendMessage("제 피씨 비번 2419치고 들어가서 바탕화면에 보시면", 6);
-                        sendFriendMessage("code.c라는 파일이 있을 거예요!!!", 10);
-                        sendFriendMessage("잘 될지는 모르겠지만,, 코드 수정을 부탁드릴게요ㅠ", 15);
-                        sendFriendMessage("#define SOUND_FLAG_A 40\n#define SOUND_FLAG_B 20", 22);
-                        sendFriendMessage("ㄴ 21, 22번째 줄에 추가해 주시구", 28);
-                        sendFriendMessage("252번째 줄에 있는 sound;를\nSOUND_FLAG_A;로 바꾸고", 33);
-                        sendFriendMessage("531번째 줄에도 sound;가 있는데", 39);
-                        sendFriendMessage("SOUND_FLAG_B; 로 바꿔주세요!", 42);
-                        sendFriendMessage("다 바꾸시고 나면", 45);
-                        sendFriendMessage("바탕화면에 있는 Compiler를 실행시켜서 정상동작하는지 확인해주세요ㅜㅜㅠ", 50);
-                        sendFriendMessage("아이고 결국 코드 수정까지 부탁드리게 됐네요... 이번만 부탁드려요ㅜㅠ!", 60);
-                        sendFriendMessage("대소문자랑 ;세미콜론 주의해서 수정해주세요!!", 64);
+                        Invoke("messageReadDelay", 3);
+                        sendFriendMessage("아 제가 지금 외부출장중이라...ㅠ", 6);
+                        sendFriendMessage("잘 될지는 모르겠지만,, 코드 추가랑 수정을 부탁드려야 할 것 같아요ㅠ", 10);
+                        sendFriendMessage("제 피씨 비번 2419치고 들어가서 바탕화면에 보시면", 15);
+                        sendFriendMessage("code.c라는 파일이 있을 거예요!!!", 20);
+                        sendFriendMessage("#define SOUND_FLAG_A 40\n#define SOUND_FLAG_B 20", 25);
+                        sendFriendMessage("ㄴ 21, 22번째 줄에 추가해 주시구", 31);
+                        sendFriendMessage("252번째 줄에 있는 sound;를\nSOUND_FLAG_A;로 바꾸고", 36);
+                        sendFriendMessage("531번째 줄에도 sound;가 있는데", 42);
+                        sendFriendMessage("SOUND_FLAG_B; 로 바꿔주세요!", 45);
+                        sendFriendMessage("다 바꾸시고 나면", 48);
+                        sendFriendMessage("바탕화면에 있는 Compiler를 실행시켜서 정상동작하는지 확인해주세요ㅜㅜㅠ", 53);
+                        sendFriendMessage("아이고 결국 코드 수정까지 부탁드리게 됐네요... 이번만 부탁드려요ㅜㅠ!", 63);
+                        sendFriendMessage("대소문자랑 ; 세미콜론 잘 보고 수정해주세요!!", 67);
                     }
-                    Invoke("firstQuizSolveDelay", 65f);
+                    Invoke("firstQuizSolveDelay", 67f);
                 }
                 else if(PlayerPrefs.GetInt("isSecondQuizSolved") != 1)
                 {
                     if (s.Contains("오류") || s.Contains("에러")
-                        || s.Contains("안돼") || s.Contains("안되") 
+                        || s.Contains("안돼") || s.Contains("안되")
                         || s.Contains("안 돼") || s.Contains("안 되"))
                     {
+                        Invoke("messageReadDelay", 3);
                         sendFriendMessage("아 잠시만 기다려주시겠어요?", 6);
                         sendFriendMessage("자리 좀 옮겨서 보이스톡 걸게요!!", 12);
                         Invoke("call", 20f);
@@ -143,6 +147,11 @@ public class ChatManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void messageReadDelay()
+    {
+        isFriendReadMessage = true;
     }
 
     public void call()
@@ -389,6 +398,7 @@ public class ChatManager : MonoBehaviour
 
         saveChat("Friend", text);
         makeMessageBalloon("Friend", text);
+        Invoke("bringScrollToBottom", 0.05f);
         StartCoroutine(leaveChatRoom());
     }
 

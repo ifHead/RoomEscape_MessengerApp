@@ -11,6 +11,11 @@ public class VoiceTalk : MonoBehaviour
     public GameObject talkAudio, callAudio;
     public bool isCallAccepted, isCallRejected;
 
+    public AudioSource awayLaunch, launchWait_1, 
+            launchWait_2, launchComplete, mouse_1, 
+            mouse_2, mouse_3, keyboard_1, keyboard_2, 
+            keyboard_3;
+
     void Start()
     {
         isCallAccepted = PlayerPrefs.GetInt("isCallAccepted") == 1 ? true : false;
@@ -38,8 +43,9 @@ public class VoiceTalk : MonoBehaviour
         callingImage.SetActive(false);
         acceptBtn.gameObject.SetActive(false);
         rejectBtn.gameObject.SetActive(false);
-        talkAudio.gameObject.SetActive(true);
-        callAudio.gameObject.SetActive(false);
+        talkAudio.SetActive(true);
+        awayLaunch.gameObject.SetActive(true);
+        callAudio.SetActive(false);
         PlayerPrefs.SetInt("isCallAccepted", 1);
     }
 

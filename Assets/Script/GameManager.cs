@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     ChatDataController chatDataController;
     public int resetIntentionCnt = 0;
 
+    public bool isSender = false;
+
     public void Start()
     {
         chatDataController = GameObject.Find("DataManager").GetComponent<ChatDataController>();
