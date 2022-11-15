@@ -419,8 +419,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 126213103}
-  - component: {fileID: 126213102}
   - component: {fileID: 126213100}
+  - component: {fileID: 126213102}
   - component: {fileID: 126213101}
   m_Layer: 0
   m_Name: NetworkManager
@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  port: 7777
+  port: 49213
   NoDelay: 1
   SendTimeout: 5000
   ReceiveTimeout: 30000
@@ -479,13 +479,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aab4c8111b7c411b9b92cf3dbc5bd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
   runInBackground: 1
   autoStartServerBuild: 1
   autoConnectClientBuild: 0
   sendRate: 30
   offlineScene: 
-  onlineScene: Assets/Scenes/SampleScene.unity
+  onlineScene: 
   transport: {fileID: 126213101}
   networkAddress: localhost
   maxConnections: 100
@@ -4096,7 +4096,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1176254089}
   m_HandleRect: {fileID: 1176254088}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
