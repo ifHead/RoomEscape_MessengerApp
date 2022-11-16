@@ -19,7 +19,7 @@ namespace Mirror{
         IEnumerator clientStartCoroutine;
         IEnumerator hostStartCoroutine;
         IEnumerator serverStartCoroutine;
-        NetworkManager manager;
+        public NetworkManager manager;
 
         public bool isServerOn = false;
         public bool isClientOn = false;
@@ -27,8 +27,16 @@ namespace Mirror{
 
         void Awake()
         {
+            if(PlayerPrefs.GetString("remoteTargetIP") == null)
+            {
+                PlayerPrefs.SetString("remoteTargetIP", "0.0.0.0");
+            }
+
+            remoteIPv4 = PlayerPrefs.GetString("remoteTargetIP");
+            manager.networkAddress = PlayerPrefs.GetString("remoteTargetIP") ;
             manager = GetComponent<NetworkManager>();
             localIPv4 = getLocalIPAddress();
+            noWifiWarn = GameObject.Find("WiFiNo").gameObject;
             noWifiWarn.SetActive(false);
 
             clientStartCoroutine = clientStart();
@@ -41,13 +49,11 @@ namespace Mirror{
             if(isWiFiConnected()) 
             {
                 localIPv4 = getLocalIPAddress();
-                manager.networkAddress = localIPv4;
 
                 //자신의 역할에 맞는 연결을 시도
                 if(wifiSetupFlag)
                 {
-                    noWifiWarn.SetActive(false);
-                    
+                    manager.networkAddress = PlayerPrefs.GetString("remoteTargetIP");
                     switch(role)
                     {
                         case Role.client :
@@ -68,7 +74,6 @@ namespace Mirror{
             }
             else
             {
-                noWifiWarn.SetActive(true);
                 //와이파이가 도중에 끊어지면 재 setup 기회를 얻음
                 wifiSetupFlag = true;
             }
@@ -78,8 +83,10 @@ namespace Mirror{
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
+                noWifiWarn.SetActive(true);
                 return false;
             }
+            noWifiWarn.SetActive(false);
             return true;
         }
 
@@ -124,7 +131,7 @@ namespace Mirror{
                     if (ip.AddressFamily == AddressFamily.InterNetwork)
                     {
                         strIP[count] = ip.ToString();
-                        if(strIP[count].Contains(ipCheckHint))
+                        if(strIP[count].Contains("192.168."))
                         {
                             return localIPv4 = strIP[count];
                         }
@@ -171,7 +178,8 @@ namespace Mirror{
             while (!NetworkClient.isConnected)
             {
                 isClientOn = false;
-                manager.networkAddress = remoteIPv4;
+                manager.networkAddress = PlayerPrefs.GetString("remoteTargetIP");
+                PlayerPrefs.SetString("remoteTargetIP", remoteIPv4);
                 manager.StartClient();
                 // Debug.Log("Client attempt" + i);
                 i++;

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         chatDataController = GameObject.Find("DataManager").GetComponent<ChatDataController>();
+        Debug.Log(PlayerPrefs.GetString("remoteTargetIP"));
         Debug.Log(PlayerPrefs.GetInt("isFirstQuizSolved"));
         Debug.Log(PlayerPrefs.GetInt("isSecondQuizSolved"));
         Debug.Log(PlayerPrefs.GetInt("isCallAccepted"));
@@ -31,13 +32,13 @@ public class GameManager : MonoBehaviour
         if(resetIntentionCnt > 10)
         {
             resetIntentionCnt = 0;
-
             PlayerPrefs.SetInt("isFirstQuizSolved", 0);
             PlayerPrefs.SetInt("isSecondQuizSolved", 0);
             PlayerPrefs.SetInt("isCallAccepted", 0);
             PlayerPrefs.SetInt("isCallRejected", 0);
             PlayerPrefs.SetInt("isInitRun", 1);
 
+            Debug.Log(PlayerPrefs.GetString("remoteTargetIP"));
             Debug.Log(PlayerPrefs.GetInt("isFirstQuizSolved"));
             Debug.Log(PlayerPrefs.GetInt("isSecondQuizSolved"));
             Debug.Log(PlayerPrefs.GetInt("isCallAccepted"));

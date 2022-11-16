@@ -148,20 +148,21 @@ public class ChatManager : MonoBehaviour
                         sendFriendMessage("아 잠시만 기다려주시겠어요?", 6);
                         sendFriendMessage("자리 좀 옮겨서 보이스톡 걸게요!!", 12);
                         Invoke("call", 20f);
+                        PlayerPrefs.SetInt("isSecondQuizSolved", 1);
                     }
-                    PlayerPrefs.SetInt("isSecondQuizSolved", 1);
                 }
 
                 if (s == "help")
                 {
                     sendFriendMessage("log", 0);
-                    sendFriendMessage("setiphint 192.168.", 0);
+                    sendFriendMessage("setremoteip 192.168.0.25", 0);
                 }
 
                 if(s == "log")
                 {
                     sendFriendMessage("Role : " + networkSetup.role.ToString(), 0);
                     sendFriendMessage("WiFi : " + networkSetup.isWiFiConnected().ToString(), 0);
+                    sendFriendMessage("Port : " + networkSetup.transform.GetComponent<Mirror.TelepathyTransport>().port.ToString(), 0);
                     
                     if(networkSetup.role == Mirror.NetworkSetup.Role.host)
                     {
@@ -185,14 +186,16 @@ public class ChatManager : MonoBehaviour
                     else if(networkSetup.role == Mirror.NetworkSetup.Role.client)
                     {
                         sendFriendMessage("Ready : " + Mirror.NetworkClient.isConnected.ToString(), 0);
-                        sendFriendMessage("Remote Target IP : " + networkSetup.remoteIPv4.ToString(), 0);
+                        sendFriendMessage("Remote Target IP : " + PlayerPrefs.GetString("remoteTargetIP"), 0);
                     }
                 }
 
-                if(s.Contains("setiphint"))
+                if(s.Contains("setremoteip"))
                 {
                     string[] iphintarr = s.Split(' ');
+                    Debug.Log(iphintarr[1]);
                     networkSetup.ipCheckHint = iphintarr[1];
+                    PlayerPrefs.SetString("remoteTargetIP", iphintarr[1]);
                 }
             }
         }
