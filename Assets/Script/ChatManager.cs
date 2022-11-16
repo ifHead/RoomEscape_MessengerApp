@@ -43,7 +43,7 @@ public class ChatManager : MonoBehaviour
 
         if(PlayerPrefs.GetInt("isSecondQuizSolved") == 1)
         {
-            Invoke("call", 3f);
+            Invoke("call", 4f);
         }
     }
 
@@ -53,7 +53,7 @@ public class ChatManager : MonoBehaviour
         {
             time += Time.deltaTime;
         }
-        else if (time > Time.deltaTime * 50)
+        else if (time > Time.deltaTime * 30)
         {
             sendButton();
         }
@@ -113,6 +113,7 @@ public class ChatManager : MonoBehaviour
             string s = inputField.text;
             saveChat("Me", inputField.text);
             makeMessageBalloon("Me", inputField.text);
+
             if(curChatRoomName.text.Contains("정산"))
             {
                 if(PlayerPrefs.GetInt("isFirstQuizSolved") != 1)

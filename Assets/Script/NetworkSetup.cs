@@ -46,6 +46,8 @@ namespace Mirror{
                 //자신의 역할에 맞는 연결을 시도
                 if(wifiSetupFlag)
                 {
+                    noWifiWarn.SetActive(false);
+                    
                     switch(role)
                     {
                         case Role.client :
@@ -66,6 +68,7 @@ namespace Mirror{
             }
             else
             {
+                noWifiWarn.SetActive(true);
                 //와이파이가 도중에 끊어지면 재 setup 기회를 얻음
                 wifiSetupFlag = true;
             }
