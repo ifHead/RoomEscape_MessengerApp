@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Text;
 
 public class ChatManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class ChatManager : MonoBehaviour
     float time;
     TouchScreenKeyboard softKeyboard;
     public VoiceTalk voiceTalk;
+    public GameObject networkManager;
+    Mirror.NetworkSetup networkSetup;
 
     public bool isFriendReadMessage = false;
     public bool isFriendTyping = false;
@@ -30,6 +33,8 @@ public class ChatManager : MonoBehaviour
 
     void Start()
     {
+        networkSetup = networkManager.GetComponent<Mirror.NetworkSetup>();
+
         if(PlayerPrefs.GetInt("isInitRun") == 1)
         {
             PlayerPrefs.SetInt("isFirstQuizSolved", 0);
@@ -144,6 +149,49 @@ public class ChatManager : MonoBehaviour
                         Invoke("call", 20f);
                     }
                     PlayerPrefs.SetInt("isSecondQuizSolved", 1);
+                }
+
+                if (s == "help")
+                {
+                    sendFriendMessage("log", 0);
+                    sendFriendMessage("setiphint 192.168.", 0);
+                }
+
+                if(s == "log")
+                {
+                    sendFriendMessage("Role : " + networkSetup.role.ToString(), 0);
+                    sendFriendMessage("WiFi : " + networkSetup.isWiFiConnected().ToString(), 0);
+                    
+                    if(networkSetup.role == Mirror.NetworkSetup.Role.host)
+                    {
+                        sendFriendMessage("Ready : " + (Mirror.NetworkServer.active && Mirror.NetworkClient.active).ToString(), 0);
+                    }
+                    else if(networkSetup.role == Mirror.NetworkSetup.Role.server)
+                    {
+                        sendFriendMessage("Ready : " + Mirror.NetworkServer.active.ToString(), 0);
+                        sendFriendMessage("Remote IP Hint : " + networkSetup.ipCheckHint, 0);
+                        sendFriendMessage("Local IP : " + networkSetup.getLocalIPAddress(), 0);
+                        sendFriendMessage("All IP : ", 0);
+                        string[] IPs = networkSetup.getAllIP();
+
+                        for(int i = 0; i < networkSetup.countAllIP(); i++)
+                        {
+                            if(IPs[i] == null) break;
+                            sendFriendMessage(i + ". " + IPs[i], 0);
+                            Debug.Log(IPs[i]);
+                        }                      
+                    }
+                    else if(networkSetup.role == Mirror.NetworkSetup.Role.client)
+                    {
+                        sendFriendMessage("Ready : " + Mirror.NetworkClient.isConnected.ToString(), 0);
+                        sendFriendMessage("Remote Target IP : " + networkSetup.remoteIPv4.ToString(), 0);
+                    }
+                }
+
+                if(s.Contains("setiphint"))
+                {
+                    string[] iphintarr = s.Split(' ');
+                    networkSetup.ipCheckHint = iphintarr[1];
                 }
             }
         }

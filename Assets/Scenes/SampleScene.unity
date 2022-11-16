@@ -390,6 +390,7 @@ MonoBehaviour:
   chatDataController: {fileID: 257014373}
   profileSetter: {fileID: 441733457}
   voiceTalk: {fileID: 333965420}
+  networkManager: {fileID: 126213099}
   isFriendReadMessage: 0
   isFriendTyping: 0
   friendLastMessageTime: 
@@ -420,7 +421,6 @@ GameObject:
   m_Component:
   - component: {fileID: 126213103}
   - component: {fileID: 126213102}
-  - component: {fileID: 126213100}
   - component: {fileID: 126213101}
   - component: {fileID: 126213104}
   m_Layer: 0
@@ -430,20 +430,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &126213100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 126213099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetX: 0
-  offsetY: 0
 --- !u!114 &126213101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,7 +442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  port: 7777
+  port: 51284
   NoDelay: 1
   SendTimeout: 5000
   ReceiveTimeout: 30000
@@ -522,11 +508,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92def050cb85d3d469fb7a1410e7ecd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localIPv4: 
+  role: 2
   remoteIPv4: 192.168.0.51
-  role: 0
-  port: 0
+  ipCheckHint: 192.168.
   noWifiWarn: {fileID: 2144682908}
+  isServerOn: 0
+  isClientOn: 0
+  isHostOn: 0
 --- !u!1 &126568906
 GameObject:
   m_ObjectHideFlags: 0
