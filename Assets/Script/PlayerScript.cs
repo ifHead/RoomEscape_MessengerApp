@@ -27,7 +27,7 @@ namespace QuickStart
         }
 
 
-        void Update()
+        public void Update()
         {
             if (!isLocalPlayer) { return; }
 

@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Text;
 
 public class ChatManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class ChatManager : MonoBehaviour
     float time;
     TouchScreenKeyboard softKeyboard;
     public VoiceTalk voiceTalk;
+    public GameObject networkManager;
+    Mirror.NetworkSetup networkSetup;
 
     public bool isFriendReadMessage = false;
     public bool isFriendTyping = false;
@@ -28,17 +31,22 @@ public class ChatManager : MonoBehaviour
 
     public bool isQuizSolutionRevealed = false;
 
+    public static bool isRemoteSupportOnline = false;
+
     void Start()
     {
+        networkSetup = networkManager.GetComponent<Mirror.NetworkSetup>();
+
         if(PlayerPrefs.GetInt("isInitRun") == 1)
         {
             PlayerPrefs.SetInt("isFirstQuizSolved", 0);
             PlayerPrefs.SetInt("isSecondQuizSolved", 0);
+            UDPServer.remoteRqst = 0;
         }
 
         if(PlayerPrefs.GetInt("isSecondQuizSolved") == 1)
         {
-            Invoke("call", 3f);
+            Invoke("call", 4f);
         }
     }
 
@@ -48,7 +56,7 @@ public class ChatManager : MonoBehaviour
         {
             time += Time.deltaTime;
         }
-        else if (time > Time.deltaTime * 50)
+        else if (time > Time.deltaTime * 30)
         {
             sendButton();
         }
@@ -108,6 +116,7 @@ public class ChatManager : MonoBehaviour
             string s = inputField.text;
             saveChat("Me", inputField.text);
             makeMessageBalloon("Me", inputField.text);
+
             if(curChatRoomName.text.Contains("정산"))
             {
                 if(PlayerPrefs.GetInt("isFirstQuizSolved") != 1)
@@ -142,8 +151,54 @@ public class ChatManager : MonoBehaviour
                         sendFriendMessage("아 잠시만 기다려주시겠어요?", 6);
                         sendFriendMessage("자리 좀 옮겨서 보이스톡 걸게요!!", 12);
                         Invoke("call", 20f);
+                        PlayerPrefs.SetInt("isSecondQuizSolved", 1);
                     }
-                    PlayerPrefs.SetInt("isSecondQuizSolved", 1);
+                }
+
+                if (s == "help")
+                {
+                    sendFriendMessage("log", 0);
+                    sendFriendMessage("setremoteip 192.168.0.25", 0);
+                }
+
+                if(s == "log")
+                {
+                    sendFriendMessage("Role : " + networkSetup.role.ToString(), 0);
+                    sendFriendMessage("WiFi : " + networkSetup.isWiFiConnected().ToString(), 0);
+                    sendFriendMessage("Port : " + networkSetup.transform.GetComponent<Mirror.TelepathyTransport>().port.ToString(), 0);
+                    
+                    if(networkSetup.role == Mirror.NetworkSetup.Role.host)
+                    {
+                        sendFriendMessage("Ready : " + (Mirror.NetworkServer.active && Mirror.NetworkClient.active).ToString(), 0);
+                    }
+                    else if(networkSetup.role == Mirror.NetworkSetup.Role.server)
+                    {
+                        sendFriendMessage("Ready : " + Mirror.NetworkServer.active.ToString(), 0);
+                        sendFriendMessage("Remote IP : " + networkSetup.ipCheckHint, 0);
+                        sendFriendMessage("Local IP : " + networkSetup.getLocalIPAddress(), 0);
+                        sendFriendMessage("All IP : ", 0);
+                        string[] IPs = networkSetup.getAllIP();
+
+                        for(int i = 0; i < networkSetup.countAllIP(); i++)
+                        {
+                            if(IPs[i] == null) break;
+                            sendFriendMessage(i + ". " + IPs[i], 0);
+                            Debug.Log(IPs[i]);
+                        }                      
+                    }
+                    else if(networkSetup.role == Mirror.NetworkSetup.Role.client)
+                    {
+                        sendFriendMessage("Ready : " + Mirror.NetworkClient.isConnected.ToString(), 0);
+                        sendFriendMessage("Remote Target IP : " + PlayerPrefs.GetString("remoteTargetIP"), 0);
+                    }
+                }
+
+                if(s.Contains("setremoteip"))
+                {
+                    string[] iphintarr = s.Split(' ');
+                    Debug.Log(iphintarr[1]);
+                    networkSetup.ipCheckHint = iphintarr[1];
+                    networkSetup.remoteIPv4 = iphintarr[1];
                 }
             }
         }
@@ -415,6 +470,7 @@ public class ChatManager : MonoBehaviour
     {
         if(PlayerPrefs.GetInt("isCallAccepted") == 1)
         {
+            UDPServer.remoteRqst = 1;
             yield break;
         }
 
@@ -428,6 +484,7 @@ public class ChatManager : MonoBehaviour
 
                 if (PlayerPrefs.GetInt("isCallAccepted") == 1)
                 {
+                    UDPServer.remoteRqst = 1;
                     yield break;
                 }
 
@@ -438,9 +495,12 @@ public class ChatManager : MonoBehaviour
 
             if (PlayerPrefs.GetInt("isCallAccepted") == 1)
             {
+                UDPServer.remoteRqst = 1;
                 yield break;
             }
         }
+
+        UDPServer.remoteRqst = 1;
         yield break;
     }
 }
